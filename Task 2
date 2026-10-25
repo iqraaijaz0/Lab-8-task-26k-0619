@@ -1,0 +1,99 @@
+#include<stdio.h>>
+int main(){
+	int marks[4][3]={0};
+	int totals[4]={0};
+	float averages[4]={0};
+	char grades[4]={0};
+	int row,col;  //4 students 3 subjects
+
+	for(int i=0;i<4;i++){
+		int total=0;
+		float avg=0;
+		for(int j=0;j<3;j++){
+			while(1){
+			
+			printf(" enter marks for student %d and subject %d",i+1,j+1);
+			
+			scanf("%d",&marks[i][j]);
+			
+			if(marks[i][j]>=0&&marks[i][j]<=100){
+					break;
+					}
+		
+			printf("invalid marks! enter a value between 0 and 100");
+}
+			total=total+marks[i][j];
+}
+		avg=total/3.0;
+	totals[i]=total;
+	averages[i]=avg;
+	if(avg>=80)
+grades[i]='A';
+	else if(avg>=65&&<=79)
+grades[i]='B';
+else	if(avg>=50 &&<=64)
+grades[i]='C';
+else 
+	grades[i]='F';	
+	}
+	}
+	
+	int prog_high=marks[0][0];
+	int prog_low=marks[0][0];
+	int cal_high=marks[0][1];
+	int cal_low=marks[0][1];
+	int phys_high=marks[0][2];
+		int phys_low=marks[0][2];
+	
+	for(int i=0;i<4;++){
+		if(marks[i][0]>prog_high)
+		prog_high=marks[i][0];
+				if(marks[i][0]<prog_low)
+		prog_low=marks[i][0];
+			prog_total=prog_total+marks[i][0];
+				if(marks[i][1]>cal_high)
+		cal_high=marks[i][1];
+				if(marks[i][1]<cal_low)
+		cal_low=marks[i][1];	
+			cal_total=cal_total+marks[i][1];
+			if(marks[i][2]>phys_high)
+		phys_high=marks[i][2];
+				if(marks[i][2]<phys_low)
+		phys_low=marks[i][2];
+		phys_total=phys_total+marks[i][2];
+	}
+	float prog_avg=prog_total/4.0;
+	float cal_avg=cal_total/4.0
+	float phy_avg=phys_total/4.0;
+	float max_avg=averages[0];
+	int top_student_index=0;
+	for(int i =1;i<4;i++){
+		if(averages[i]>max_avg){
+			max_avg=averages[i];
+			top_student_index=i;
+		}
+	}
+	printf("\n%-12s %8s %8s %8s %8s %8s %5s\n","student","Prog","cal","phys","total","average","Grade");
+for(int i=0;i<4;i++){
+
+	printf("student %-4d %8d %8d %8d %8d %8d %8.2f %5c\n",i+1,marks[0][0],marks[0][1],marks[0][2],totals[i],averages[i],grades[i]);}
+	printf("\nSubject statistics:\n");
+    printf("%-15s %8s %8s %8s\n", "Subject", "Highest", "Lowest", "Average");
+    
+    printf("%-15s %8d %8d %8.2f\n", "Programming", prog_high, prog_low, prog_avg);
+    printf("%-15s %8d %8d %8.2f\n", "Calculus", cal_high, cal_low, cal_avg);
+    printf("%-15s %8d %8d %8.2f\n", "Physics", phys_high, phys_low, phys_avg);
+
+    printf("\nTop student: Student %d (Average %.2f)\n", top_student_index + 1, max_avg);
+    
+    
+    if (prog_avg <= cal_avg && prog_avg <= phys_avg) {
+        printf("Worst subject: Programming (Average %.2f)\n", prog_avg);
+    } else if (cal_avg <= prog_avg && cal_avg <= phys_avg) {
+        printf("Worst subject: Calculus (Average %.2f)\n", cal_avg);
+    } else {
+        printf("Worst subject: Physics (Average %.2f)\n", phys_avg);
+    }
+
+    return 0;
+}
