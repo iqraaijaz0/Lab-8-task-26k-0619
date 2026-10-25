@@ -1,0 +1,129 @@
+#include <stdio.h>
+
+int main() {
+    int choice;
+    int floornumber, patientID;
+    int floorIndex;
+    int beds[2][3][2] = {0};
+
+    while (1) {
+        printf("\n1:Admit 2:discharge 3:Report 4:Exit\n");
+        printf("enter your choice : ");
+        if (scanf("%d", &choice) != 1) {
+            break;
+        }
+
+        if (choice == 4) {
+            break;
+        }
+
+        switch (choice) {
+            case 1:
+                printf("Enter floor number: ");
+                scanf("%d", &floornumber);
+                printf("Enter patient ID: ");
+                scanf("%d", &patientID);
+
+                floorIndex = floornumber - 1;
+                int allocatedstatus = 0;
+
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (beds[floorIndex][i][j] == 0) {
+                            beds[floorIndex][i][j] = patientID;
+                            allocatedstatus = 1;
+                            printf("Patient %d admitted: Floor %d, Ward %d, Bed %d.\n", patientID, floornumber, i + 1, j + 1);
+                            break;
+                        }
+                    }
+                    if (allocatedstatus == 1) {
+                        break;
+                    }
+                }
+
+                if (allocatedstatus == 0) {
+                    printf("Floor %d is full.\n", floornumber);
+                }
+                break;
+
+            case 2:
+                printf("enter patient ID: ");
+                scanf("%d", &patientID);
+
+                int found = 0;
+
+                for (int i = 0; i < 2; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        for (int k = 0; k < 2; k++) {
+                            if (beds[i][j][k] == patientID) {
+                                beds[i][j][k] = 0;
+                                printf("Patient %d discharged from Floor %d, Ward %d, Bed %d.\n", patientID, i + 1, j + 1, k + 1);
+                                found = 1;
+                                break;
+                            }
+                        }
+                        if (found == 1) {
+                            break;
+                        }
+                    }
+                    if (found == 1) {
+                        break;
+                    }
+                }
+
+                if (found == 0) {
+                    printf("Patient ID %d not found.\n", patientID);
+                }
+                break;
+
+            case 3:
+                printf("\n--- Occupancy Report ---\n");
+                int max_occupied = -1;
+                int max_floor = 0;
+                int max_ward = 0;
+
+                for (int i = 0; i < 2; i++) {
+                    printf("Floor %d\n", i + 1);
+                    int floor_occupied = 0;
+
+                    for (int j = 0; j < 3; j++) {
+                        int ward_occupied = 0;
+                        int ward_vacant = 0;
+
+                        for (int k = 0; k < 2; k++) {
+                            if (beds[i][j][k] != 0) {
+                                ward_occupied++;
+                                floor_occupied++;
+                            } else {
+                                ward_vacant++;
+                            }
+                        }
+
+                        printf("  Ward %d: Occupied %d, Vacant %d\n", j + 1, ward_occupied, ward_vacant);
+
+                        if (ward_occupied > max_occupied) {
+                            max_occupied = ward_occupied;
+                            max_floor = i + 1;
+                            max_ward = j + 1;
+                        }
+                    }
+
+                    float occupancy_pct = (floor_occupied / 6.0) * 100.0;
+                    printf("  Floor occupancy: %.1f%%\n", occupancy_pct);
+
+                    if (occupancy_pct > 80.0) {
+                        printf("WARNING: Floor %d is more than 80%% full.\n", i + 1);
+                    }
+                }
+
+                printf("Highest occupancy: Floor %d, Ward %d (%d occupied)\n", max_floor, max_ward, max_occupied);
+                break;
+
+            default:
+                printf("Invalid choice!\n");
+                break;
+        }
+    }
+
+    return 0;
+}
