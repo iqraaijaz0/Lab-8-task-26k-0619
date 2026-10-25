@@ -1,0 +1,79 @@
+#include<stdio.h>
+int main(){
+	int units[3][4]={0}; //3 rows=aisles 4 columns=shelf
+	int greatesttotalstock=0;
+	int completelyempty=0;
+	int	totals[3];
+	int maxlowcount=0;
+	int worst_aisle=0;
+	int best_aisle=0;
+	int newgrandtotal=0;
+	for(int i=0;i<3;i++){
+		int totalstock=0;
+		for(int j=0;j<4;j++){
+			printf("enter unit value: ");
+			scanf("%d",&units[i][j]);
+			totalstock=totalstock+units[i][j];
+		}
+		totals[i]=totalstock;
+		if(totals[i]>greatesttotalstock){
+		
+		greatesttotalstock=totals[i];}
+		best_aisle=i+1;
+	}
+	printf("Original Stocck\n");
+		for(int i=0;i<3;i++){
+			printf("Aisle %d: ",i+1);
+		for(int j=0;j<4;j++){
+	printf("%d ",units[i][j]);
+
+}
+printf("\n");
+}
+printf("Aisle with most stock:Aisle %d (%d units)\n",best_aisle,greatesttotalstock);
+	
+	for(int i=0;i<3;i++){
+		for(int j=0;j<4;j++){
+			if(units[i][j]<5)
+			printf(" low stock alert :Aisle %d shelf %d\n",i+1,j+1);
+		}
+	}
+		for(int i=0;i<3;i++){
+		for(int j=0;j<4;j++){
+				if(units[i][j]==0)
+				completelyempty++;
+				}
+			}
+			printf("Empty shelfes: %d\n",completelyempty);
+		for(int i=0;i<3;i++){
+			int lowshelfinthisaisle=0;
+		for(int j=0;j<4;j++){
+			if(units[i][j]<5){
+			units[i][j]=units[i][j]+10;
+			 lowshelfinthisaisle++;
+			 }
+			if (lowshelfinthisaisle>maxlowcount)
+			maxlowcount=lowshelfinthisaisle;
+			worst_aisle=i+1;
+		}
+		printf("Aisle with most low stock shelfes : aisle %d",worst_aisle);
+			for(int i=0;i<3;i++){
+		for(int j=0;j<4;j++){
+			newgrandtotal=newgrandtotal+units[i][j];
+		}}
+		
+		
+			printf("Stock after restock\n");
+		for(int i=0;i<3;i++){
+			printf("Aisle %d: ",i+1);
+		for(int j=0;j<4;j++){
+	printf("%d ",units[i][j]);
+}
+printf("\n");
+}
+		printf("New grand total:%d units\n",newgrandtotal);
+			
+}
+			
+	return 0;
+}
