@@ -1,0 +1,74 @@
+#include <stdio.h>
+
+int main() {
+    
+    int seat[5][6] = {0}; 
+    int row, col;
+
+   
+    while (1) {
+        printf("enter row number: ");
+        scanf("%d", &row);
+        if (row == -1)
+            break;
+
+        printf("enter col number: ");
+        scanf("%d", &col);
+
+        if (row > 5 || row < 1 || col > 6 || col < 1) {
+            printf("invalid range\n");
+        } 
+        else if (seat[row - 1][col - 1] == 1) {
+            printf("seat is already booked\n");
+        } 
+        else {
+            seat[row - 1][col - 1] = 1;
+           
+            printf("seat booked successfully\n"); 
+        }
+    }
+
+   
+    printf("\nSeating Chart:\n");
+    printf("  1 2 3 4 5 6\n");
+    for (int i = 0; i < 5; i++) {
+        printf(" Row %d ", i + 1);
+        for (int j = 0; j < 6; j++) {
+            if (seat[i][j] == 1)
+                printf("X ");
+            else
+                printf("O "); 
+        }
+        printf("\n");
+    }
+
+    
+    int totalbooked = 0;
+    int maxbookedvalue = -1;       
+    int rowwithmostbookings = 1;   
+
+    for (int i = 0; i < 5; i++) {
+        int currentbookedinarow = 0;
+        for (int j = 0; j < 6; j++) {
+            if (seat[i][j] == 1)
+                currentbookedinarow++;
+        }
+        
+        totalbooked = totalbooked + currentbookedinarow;
+
+      
+        if (currentbookedinarow > maxbookedvalue) {
+            maxbookedvalue = currentbookedinarow;
+            rowwithmostbookings = i + 1;         // Us row ka number
+        }
+    }
+
+    int totalEmpty = 30 - totalbooked;
+
+    // Final Statistics Print Karein
+    printf("\nTotal booked seats: %d\n", totalbooked);
+    printf("Total empty seats: %d\n", totalEmpty);
+    printf("Row with most bookings: Row %d\n", rowwithmostbookings);
+
+    return 0;
+}
